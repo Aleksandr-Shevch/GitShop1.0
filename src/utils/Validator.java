@@ -1,14 +1,28 @@
 package utils;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Validator {
 
     public static String validateName(Scanner scanner) {
         String str = scanner.nextLine().trim();
+        boolean result = str.matches("[a-zA-Z]+");
         while (str.isEmpty()) {
             System.out.print("Пусто! Введите имя клиента: ");
             str = scanner.nextLine().trim();
+        }
+        while (!result) {
+            try {
+                throw new MyException("");
+            } catch (MyException myException) {
+                System.out.println(myException.getMessege());
+                str = scanner.nextLine().trim();
+
+                System.out.println(str + "- Недопустимые символы!");
+                str = scanner.nextLine().trim();
+            }
+            return str;
         }
 
         return str;
@@ -29,7 +43,13 @@ public class Validator {
 
         while (quantity <= 0) {
             System.out.println("Неверное значение! Введите количество: ");
-
+            while (!scanner.hasNextInt()) {
+                try {
+                    str1 = scanner.next().trim();
+                } catch (InputMismatchException ime) {
+                    System.out.printf("\"%s\" - не число!%nВведите количество!: ", str1);
+                }
+            }
             quantity = scanner.nextInt();
         }
         return quantity;
@@ -45,7 +65,13 @@ public class Validator {
             String str = scanner.nextLine().trim();
             System.out.printf("\"%s\" - не число!%nВведите цену!: ", str);
         }
-
+        while (!scanner.hasNextDouble()) {
+            try {
+                str1 = scanner.next().trim();
+            } catch (InputMismatchException ime) {
+                System.out.printf("\"%s\" - не число!%nВведите цену!: ", str1);
+            }
+        }
         price = scanner.nextDouble();
 
         while (price <= 0) {
