@@ -1,3 +1,7 @@
+import controllers.ClientController;
+import models.Client;
+import views.ClientView;
+
 public class Main {
     public static void main(String[] args) {
         Client model = new Client();
