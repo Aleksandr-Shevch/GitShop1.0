@@ -7,9 +7,22 @@ public class Validator {
 
     public static String validateName(Scanner scanner) {
         String str = scanner.nextLine().trim();
+        boolean result = str.matches("[a-zA-Z]+");
         while (str.isEmpty()) {
             System.out.print("Пусто! Введите имя клиента: ");
             str = scanner.nextLine().trim();
+        }
+        while (!result) {
+            try {
+                throw new MyException("");
+            } catch (MyException myException) {
+                System.out.println(myException.getMessege());
+                str = scanner.nextLine().trim();
+
+                System.out.println(str + "- Недопустимые символы!");
+                str = scanner.nextLine().trim();
+            }
+            return str;
         }
 
         return str;
